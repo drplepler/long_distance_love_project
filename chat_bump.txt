@@ -1,0 +1,40 @@
+# Project Summary: Romantic Landing Page
+
+**Project Goal:** Create a romantic landing page with a world map showing Amsterdam and Haifa, where a cartoon plane flies from Amsterdam to Haifa as the user scrolls.
+
+**Current Status:** ✅ Deployed to GitHub (https://github.com/drplepler/ams_tlv_proj)
+
+## Completed Features
+
+**Core Animation:**
+- World map background with city markers for Amsterdam (x:45%, y:5%) and Haifa (x:56.2%, y:95.2%)
+- Scroll-based plane animation with wave pattern perpendicular to flight path
+- Direction-based plane image switching (left/right images)
+- Map scrolls vertically while plane follows city screen positions
+- Plane size: 100px
+- Vertical range clamped to 15%-85% screen
+
+**Page Structure:**
+- 20 scroll sections for slower animation speed
+- Neutral gray background (#f5f5f5)
+- Map uses `object-fit: contain` (shows full height, empty spaces on sides due to aspect ratio)
+
+**Files:**
+- `index.html` - HTML structure
+- `styles.css` - Styling
+- `script.js` - Animation logic
+- `city-coordinates.json` - City positions
+- `map_draft.png` - World map image
+- `plane_cartoo_v1_left.png` / `plane_cartoo_v1_right.png` - Plane images
+- `README.md` - Deployment instructions
+
+## Known Limitations
+
+- Map has empty spaces on sides due to tall/narrow aspect ratio
+- To fix: crop/resize map image to wider aspect ratio (16:9) or find different map
+
+## Next Steps (When Ready)
+
+- Add romantic content to scroll sections in `index.html`
+- Enable GitHub Pages in repository settings
+- Fine-tune wave parameters (amplitude/frequency) if needed
