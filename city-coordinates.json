@@ -1,0 +1,12 @@
+{
+  "amsterdam": {
+    "x": 45,
+    "y": 5,
+    "name": "Amsterdam"
+  },
+  "haifa": {
+    "x": 56.2,
+    "y": 95.2,
+    "name": "Haifa"
+  }
+}
