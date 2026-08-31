@@ -4,25 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Long Distance Love</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap">
+    <link rel="stylesheet" href="styles.css?v=30">
 </head>
 <body>
     <div class="map-container">
-        <div class="map-wrapper">
-            <img src="map_draft.png" alt="World Map" class="world-map" id="worldMap">
-            <div class="city-marker amsterdam" id="amsterdam">
-                <div class="marker-dot"></div>
-                <div class="marker-label">Amsterdam</div>
-            </div>
-            <div class="city-marker haifa" id="haifa">
-                <div class="marker-dot"></div>
-                <div class="marker-label">Haifa</div>
+        <svg id="map" class="world-map" preserveAspectRatio="xMidYMid slice">
+            <g id="mapLand"></g>
+            <g id="routes"></g>
+            <g id="cityMarkers"></g>
+        </svg>
+    </div>
+
+    <!-- planes are created by script.js, one per flight leg -->
+
+    <canvas id="fx" class="fx-layer"></canvas>
+
+    <!-- Payoff card shown on arrival in Yerevan -->
+    <img class="plan-card" id="planCard" src="images/plan.png" alt="Plan">
+
+
+    <!-- Countdown intro: shown while scrolling through the first stretch of the page -->
+    <div class="countdown" id="countdown">
+        <div class="countdown-inner">
+            <div class="countdown-label">до приключения</div>
+            <div class="countdown-value">
+                <span id="cdDays">5</span> <span id="cdDaysWord">дней</span>
+                <span id="cdHours">0</span> <span id="cdHoursWord">часов</span>
             </div>
         </div>
     </div>
-    
-    <div class="plane" id="plane">
-        <img src="plane_cartoo_v1_right.png" alt="Plane" class="plane-image" id="planeImage">
+    <div class="flash" id="flash"></div>
+
+    <!-- Scroll room for the countdown phase (height only) -->
+    <div class="intro-spacer" id="introSpacer"></div>
+
+    <div class="scroll-hint" id="scrollHint">
+        <span>листай вниз, чтобы начать отсчёт</span>
+        <span class="scroll-hint-arrow" aria-hidden="true">&#8595;</span>
+    </div>
+    <div class="scroll-hint is-hidden" id="scrollHintCd">
+        <span>скроль скроль</span>
+        <span class="scroll-hint-arrow" aria-hidden="true">&#8595;</span>
+    </div>
+    <div class="scroll-hint is-hidden" id="scrollHint2">
+        <span>давай давай ещё</span>
+        <span class="scroll-hint-arrow" aria-hidden="true">&#8595;</span>
+    </div>
+    <div class="scroll-hint is-hidden" id="scrollHint3">
+        <span>ещё чуть-чуть</span>
+        <span class="scroll-hint-arrow" aria-hidden="true">&#8595;</span>
     </div>
 
     <div class="content-sections">
@@ -48,6 +81,13 @@
         <section class="content-section"></section>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Scroll room after arrival: the plan card rises into view here -->
+    <div class="outro-spacer" id="outroSpacer"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+    <script src="confetti.browser.min.js"></script>
+    <script src="map.js?v=30"></script>
+    <script src="script.js?v=30"></script>
 </body>
 </html>

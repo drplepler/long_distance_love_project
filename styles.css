@@ -5,100 +5,239 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f5f5f5;
+    font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+    background: #eef3f8;
     min-height: 100vh;
     overflow-x: hidden;
 }
 
+/* Fixed vector map behind everything */
 .map-container {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
+    inset: 0;
     z-index: 0;
     overflow: hidden;
-    background: #f5f5f5;
-}
-
-.map-wrapper {
-    position: absolute;
-    width: 100%;
-    height: 200vh; /* Taller to allow scrolling movement */
-    top: 0;
-    left: 0;
-    transition: transform 0.1s ease-out;
+    background: linear-gradient(180deg, #eef3f8 0%, #dfeaf3 100%);
 }
 
 .world-map {
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    opacity: 0.9;
 }
 
-.city-marker {
-    position: absolute;
-    transform: translate(-50%, -50%);
+.land {
+    fill: #c9d6c4;
+    stroke: #ffffff;
+    stroke-width: 0.6;
+    stroke-linejoin: round;
 }
 
+
+/* Flight path */
+.flight-path {
+    fill: none;
+    stroke: rgba(255, 107, 107, 0.25);
+    stroke-width: 2;
+    stroke-dasharray: 2 6;
+    stroke-linecap: round;
+}
+
+.flight-trail {
+    fill: none;
+    stroke: #ff6b6b;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.1s ease-out;
+}
+
+/* City markers (SVG) */
 .marker-dot {
-    width: 12px;
-    height: 12px;
-    background: #ff6b6b;
-    border-radius: 50%;
-    border: 3px solid white;
-    box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
-    animation: pulse 2s infinite;
+    fill: #ff6b6b;
+    stroke: #ffffff;
+    stroke-width: 3;
+    transform-origin: 0 0;           /* circle is centred on the <g> origin */
+    animation: pulse 2s ease-in-out infinite;
 }
 
 @keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
-    }
-    50% {
-        transform: scale(1.2);
-        box-shadow: 0 0 20px rgba(255, 107, 107, 0.8);
-    }
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.25); }
 }
 
 .marker-label {
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: white;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
+    fill: #33404a;
+    font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+    font-size: 13px;
     font-weight: 600;
-    color: #333;
-    white-space: nowrap;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    paint-order: stroke;
+    stroke: #ffffff;
+    stroke-width: 4;
+    stroke-linejoin: round;
 }
 
-.amsterdam {
-    /* Coordinates will be set in JS based on map */
-    top: 30%;
-    left: 48%;
+/* City thumbnail cards */
+.thumb-card {
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.18));
 }
 
-.haifa {
-    /* Coordinates will be set in JS based on map */
-    top: 45%;
-    left: 58%;
+.thumb-outline {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.9);
+    stroke-width: 1.5;
 }
 
+.thumb-caption {
+    fill: #33404a;
+    font-family: 'Nunito', 'Segoe UI', system-ui, sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    paint-order: stroke;
+    stroke: #ffffff;
+    stroke-width: 3;
+    stroke-linejoin: round;
+}
+
+/* Countdown intro */
+.intro-spacer {
+    position: relative;
+    z-index: 1;
+    height: 1400vh;   /* scroll room for the countdown phase (bigger = slower) */
+}
+
+.outro-spacer {
+    position: relative;
+    z-index: 1;
+    height: 2200vh;   /* scroll room after arrival for the plan card reveal (bigger = slower) */
+}
+
+.countdown {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:
+        linear-gradient(180deg, rgba(15, 22, 33, 0.28) 0%, rgba(15, 22, 33, 0.42) 100%),
+        url('images/background.jpg') center / cover no-repeat;
+    color: #ffffff;
+    text-shadow: 0 2px 12px rgba(15, 22, 33, 0.45);
+    will-change: opacity, transform;
+}
+
+.countdown-label {
+    font-size: clamp(14px, 2.4vw, 20px);
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-bottom: 18px;
+}
+
+.countdown-value {
+    font-size: clamp(30px, 8vw, 84px);
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+}
+
+.countdown-value span[id$="Word"] {
+    font-weight: 500;
+    opacity: 0.7;
+}
+
+.flash {
+    position: fixed;
+    inset: 0;
+    z-index: 48;
+    background: #ffffff;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Arrival payoff card */
+.plan-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, calc(-50% + 115vh)) scale(0.94);
+    z-index: 25;
+    width: auto;
+    max-height: 80vh;
+    max-width: 88vw;
+    border-radius: 16px;
+    box-shadow: 0 20px 55px rgba(15, 22, 33, 0.38);
+    opacity: 0;
+    pointer-events: none;
+    will-change: transform, opacity;
+}
+
+/* Scroll guidance */
+.scroll-hint {
+    position: fixed;
+    left: 50%;
+    top: 26px;
+    transform: translateX(-50%);
+    z-index: 42;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 24px 44px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.2);
+    font-size: 28px;
+    font-weight: 700;
+    color: #33404a;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.scroll-hint.is-hidden {
+    opacity: 0;
+}
+
+.scroll-hint-arrow {
+    font-size: 34px;
+    line-height: 1;
+    animation: hint-bounce 1.6s ease-in-out infinite;
+}
+
+@keyframes hint-bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(9px); }
+}
+
+/* Effects overlay (heart bursts) */
+.fx-layer {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 20;
+    pointer-events: none;
+}
+
+/* Plane */
 .plane {
     position: fixed;
-    width: 100px;
-    height: 100px;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    width: 76px;
+    height: 66px;
     z-index: 10;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-    transition: transform 0.1s ease-out;
+    pointer-events: none;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.28));
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s linear;
+}
+
+.plane[hidden] {
+    display: none;
 }
 
 .plane-image {
@@ -107,15 +246,15 @@ body {
     object-fit: contain;
 }
 
+/* Scroll length */
 .content-sections {
     position: relative;
     z-index: 1;
 }
 
 .content-section {
-    height: 100vh;
+    height: 200vh; /* taller sections => more scroll => slower plane */
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
