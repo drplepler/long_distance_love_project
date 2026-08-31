@@ -86,7 +86,7 @@
     }
 
     // --- Countdown intro ---
-    const COUNTDOWN_HOURS = 5 * 24;   // start at "5 days 0 hours"
+    const COUNTDOWN_HOURS = 4 * 24;   // start at "4 days 0 hours"
     const cdEl = document.getElementById('countdown');
     const flashEl = document.getElementById('flash');
     const introSpacer = document.getElementById('introSpacer');
